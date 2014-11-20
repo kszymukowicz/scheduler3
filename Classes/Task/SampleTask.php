@@ -3,11 +3,13 @@
 namespace V\Scheduler3\Task;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\ArrayUtility;
 
 class SampleTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask {
 
 	public function execute() {
 
+		// Example of flash messages.
 		$flashMessageOk = GeneralUtility::makeInstance(
 				'\\TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
 				'Message to be passed',
@@ -32,6 +34,11 @@ class SampleTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask {
 		$defaultFlashMessageQueue->enqueue($flashMessageInfo);
 		$defaultFlashMessageQueue->enqueue($flashMessageError);
 
+		// Example of logging debug into table for later.
+		GeneralUtility::devLog('[V\\Scheduler3\\Task\\SampleTask]: Message', 'scheduler3', 2, ArrayUtility::convertObjectToArray($this));
+
+		// Example of debug at once into BE.
+		debug(ArrayUtility::convertObjectToArray($this));
 		return TRUE;
 	}
 
